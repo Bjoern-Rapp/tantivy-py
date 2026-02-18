@@ -8,11 +8,15 @@ version = "0.25.1"
 description = "Official Python bindings for the Tantivy search engine"
 requires-python = ">=3.9"
 authors = [
-    { name = "Damir Jelić", email="poljar@termina.org.uk" },
+    { name = "Damir Jelić", email = "poljar@termina.org.uk" },
     { name = "Caleb Hattingh", email = "code@cjrh.info" },
-    { name = "Cam Parry", email = "cam.parry@kapiche.com"}
+    { name = "Cam Parry", email = "cam.parry@kapiche.com" },
 ]
-optional-dependencies = { dev = ["nox"] }
+
+[dependency-groups]
+build = ["maturin>=1.0,<2.0"]
+test = ["pytest>=4.0", "mktestdocs==0.2.1"]
+dev = ["nox", {include-group = "test"}, {include-group = "build"}]
 
 [tool.maturin]
 bindings = "pyo3"
@@ -23,8 +27,4 @@ bindings = "pyo3"
 addopts = "--doctest-modules --durations=10"
 # Use the `--ignore-glob` setting to exclude the `noxfile.py` module from the doctests
 # See https://docs.pytest.org/en/latest/reference.html#confval-ignore_glob
-testpaths = [
-    "tests",
-    "tantivy",
-    "src",
-]
+testpaths = ["tests", "tantivy", "src"]
